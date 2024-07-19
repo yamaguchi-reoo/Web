@@ -15,10 +15,10 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <None Include="c2Test.htm">
+    <None Include="html\c2Test.htm">
       <Filter>ソース ファイル</Filter>
     </None>
-    <None Include="c3Test.htm">
+    <None Include="html\c3Test.htm">
       <Filter>ソース ファイル</Filter>
     </None>
   </ItemGroup>

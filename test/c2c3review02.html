@@ -7,7 +7,24 @@
     <body>
         <script>
 		//ここに課題の解答を入力してください！
-        //入力がなかった場合の処理は、「年齢に何も入っていなければ(null)」という条件式を組んでください！
+            //入力がなかった場合の処理は、「年齢に何も入っていなければ(null)」という条件式を組んでください！
+            var age = window.prompt('年齢層を判定します。年齢を入力してください。');
+
+            if (age == null) {
+                window.alert('入力がないため、結果が正しく判断されませんでした。');
+            }
+            else if (age < 18) {
+                window.document.write('<p>' + age + '歳は「未成年です」<p>');
+            }
+            else if (age < 65) {
+                window.document.write('<p>' + age + '歳は「成人です」<p>');
+            }
+            else if (age < 100) {
+                window.document.write('<p>' + age + '歳は「高齢者です」<p>');
+            }
+            else if (age > 100) {
+                window.document.write('<p>100歳以上は「ご長寿」です。長生きしてください。<p>');
+            }
         </script>
     </body>
 </html>
