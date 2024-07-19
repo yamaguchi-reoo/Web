@@ -88,9 +88,28 @@ function Janken() {
         let com = GetComHand();
         // 結果を表示
         alert(GetResultMsg(com, hum));
+        return GetResult(com, hum);
     }
-
 } 
-//関数呼び出し
-Janken();
+
+let isLose = false;
+let win = 0;
+
+while (!isLose) {
+    //関数呼び出し
+   let result = Janken();
+
+    if (result === '結果は「あいこ」。') {
+        continue;
+    }
+    else if (result === '勝ったぞ、やったね') {
+        win++;
+        alert(win + '連勝中');
+        continue;
+    }
+    alert('連勝ストップ、記録は「' + win + '」勝');
+    isLose = true;
+    break;
+}
+
 
