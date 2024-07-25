@@ -20,7 +20,7 @@ mainFlame.insertBefore(mainImage, null);
 mainFlame.insertBefore(mainMsg, null);
 
 //サムネイル写真画像を表示
-let thumbFlame = document.querySelector('#gallery, .thumb');
+let thumbFlame = document.querySelector('#gallery .thumb');
 for (let i = 0; i < album.length; i++) {
     let thumbImage = document.createElement('img');
     thumbImage.setAttribute('src', album[i].src);
