@@ -22,7 +22,15 @@ let direct = 1;   // 進行方向（正：右方向／負：左方向）
 function timerstart(){
   imgLeft += 5 * direct;
   document.getElementById("img1").style.left = imgLeft + "px";
-  setTimeout("timerstart()", 100);
+    setTimeout("timerstart()", 100);
+
+    if (document.getElementById("img1").style.left == "200px") {
+        direct = -1;
+    }
+    else if (document.getElementById("img1").style.left == "0px") {
+        direct = 1;
+    }
+
 }
 </script>
   </body>

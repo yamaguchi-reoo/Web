@@ -17,6 +17,11 @@ let disparea = document.getElementById("counterarea");
 let minus = function() {
     counter--;
     disparea.innerHTML = counter;
+
+    //0以下にならないように
+    if (counter < 1) {
+        counter = 1;
+    }
   }
 let plus = function() {
   counter++;

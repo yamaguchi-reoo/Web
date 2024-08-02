@@ -21,16 +21,31 @@ let timerstart = function() {
 }
 let timermove = function() {
   //ここに、カウンターの値を調べて、0以下の場合はタイマーを止める処理を加える
-    counter--;
-    disparea.innerHTML = counter;
-    repeat = setTimeout('timermove()', 1000);
+    if (counter > 0) {
+        counter--;
+        disparea.innerHTML = counter;
+        repeat = setTimeout('timermove()', 1000);
+    }
+    
   }
 let minus = function() {
- //実習06から、解答済みの処理をコピーして貼り付ける！
+    //実習06から、解答済みの処理をコピーして貼り付ける！
+    counter--;
+    disparea.innerHTML = counter;
+
+    //0以下にならないように
+    if (counter < 1) {
+        counter = 1;
+    }
 }
 let plus = function() {
- //実習06から、解答済みの処理をコピーして貼り付ける！
-}
+    //実習06から、解答済みの処理をコピーして貼り付ける！
+    counter++;
+    disparea.innerHTML = counter;
+    }
+
+
+
 </script>
   </body>
 </html>
