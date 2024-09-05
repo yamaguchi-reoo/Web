@@ -33,7 +33,7 @@ class App {
         }
 
         //UIを構築し描画
-        let TitleElement = `<div class="title"><h1>タイピングゲーム</h1><button onclick="app.playTypingGame()">ゲーム開始</button></div>`;
+        let TitleElement = `<div class="title"><h1>タイピングゲーム</h1><button onclick="app.playTypingGame();">ゲーム開始</button></div>`;
         let containerElement = `<div class="container">${TitleElement}</div>`;
         let mainElement = `<main>${containerElement}</main>`;
 
@@ -112,10 +112,16 @@ class App {
                                 "romaji": "ni"
                             },
                             {
+                                "text": "モ",
+                                "hiragana": "も",
+                                "katakana": "モ",
+                                "romaji": "mo"
+                            },
+                            {
                                 "text": "マ",
                                 "hiragana": "ま",
                                 "katakana": "マ",
-                                "romaji": "mo"
+                                "romaji": "ma"
                             },
                             {
                                 "text": "ケ",
@@ -151,7 +157,7 @@ class App {
                                 "text": "マ",
                                 "hiragana": "ま",
                                 "katakana": "マ",
-                                "romaji": "mo"
+                                "romaji": "ma"
                             },
                             {
                                 "text": "ケ",
@@ -380,8 +386,8 @@ class App {
             return this.playTypingGame();
         }
         //UIを構築し描画
-        let typingGameElement = `<div class="typingGame"><div class="time">00:00.00</div><h2></h2><p>Enterキーを押すとゲームが始まります。</p><button onclick="app.title();">やめる</button></div>`;
-        let containerElement = `<div class="container">${typingGameElement}</div>`;
+        let TypingGameElement = `<div class="TypingGame"><div class="time">00:00.00</div><h2></h2><p>Enterキーを押すとゲームが始まります。</p><button onclick="app.title();">やめる</button></div>`;
+        let containerElement = `<div class="container">${TypingGameElement}</div>`;
         let mainElement = `<main>${containerElement}</main>`;
 
         document.querySelector('body').innerHTML = mainElement;
@@ -393,7 +399,7 @@ class App {
                 if (event.key === 'Enter') {
                     this.TypingGame_data.time = [0, 0, 0];//クリアタイム（00:00.00）
 
-                    this.TypingGame_data.typingCount = 0;  //総タイプ数
+                    this.TypingGame_data.TypingCount = 0;  //総タイプ数
                     this.TypingGame_data.missCount = 0;     //誤タイプ数
                     this.TypingGame_data.clearCount = 0;    //正タイプ数
 
@@ -424,13 +430,13 @@ class App {
         let generateMustEnteredKeys = () => {
             if (!this.TypingGame_data.questionContents) return false;
 
-            let questionCount = this.TypingGame_data.questionContents[this.TypingGame_data.currentQuestionIndex].characters;
-            if (!questionCount) return false;
+            let questionCntent = this.TypingGame_data.questionContents[this.TypingGame_data.currentQuestionIndex].characters;
+            if (!questionCntent) return false;
 
             this.TypingGame_data.mustEnteredKeys = [];
 
-            for (let i = 0; i < questionCount.length; i++) {
-                let romajiArray = questionCount[i].romaji.split('');    //文字列を一文字ずつ分割
+            for (let i = 0; i < questionCntent.length; i++) {
+                let romajiArray = questionCntent[i].romaji.split('');    //文字列を一文字ずつ分割
 
                 for (let j = 0; j < romajiArray.length; j++) {
                     this.TypingGame_data.mustEnteredKeys.push({ charcter: romajiArray[j], state: 'not-entered' });//配列の末尾に要素を追加
@@ -448,7 +454,7 @@ class App {
             let textString = '';  //表示する問題文（例：　吾輩は猫である）
             let romajiString = '';//表示するローマ文字列（例： wagahaihanekodearu）
 
-            let checkd_mustEnteredKeys_index = 0;   //チェック済み問題キー配列のインデックス
+            let checked_mustEnteredKeys_index = 0;   //チェック済み問題キー配列のインデックス
 
             for (let i = 0; i < questionContent.length; i++) {
                 let romajiArray = questionContent[i].romaji.split('');  //'waga' -> ['w', 'a', 'g', 'a']
@@ -462,44 +468,44 @@ class App {
                 //ローマ字を一文字ずつ判定
                 for (let j = 0; j < romajiArray.length; j++) {
                     //ユーザーの入力に応じた結果を取得
-                    if (romajiArray[j] === this.TypingGame_data.mustEnteredKeys[checkd_mustEnteredKeys_index].character) {
-                        stateA = this.TypingGame_data.mustEnteredKeys[checkd_mustEnteredKeys_index].state;
+                    if (romajiArray[j] == this.TypingGame_data.mustEnteredKeys[checked_mustEnteredKeys_index].character) {
+                        stateA = this.TypingGame_data.mustEnteredKeys[checked_mustEnteredKeys_index].state;
                         if (stateB !== 'miss') stateB = stateA;
-                        checkd_mustEnteredKeys_index++;
-                    }
+                        checked_mustEnteredKeys_index++;
+                    };
 
                     //結果に応じてスタイル（クラス）を設定し、出力
                     option_begin = stateA == 'not-entered' ? `<span class="opacity05">` : option_begin;
-                    option_end = stateA == 'not-entered' ? `</span>` : option_end;
+                    option_end   = stateA == 'not-entered' ? `</span>` : option_end;
                     option_begin = stateA == 'miss' ? `<span class="colorRed">` : option_begin;
-                    option_end = stateA == 'miss' ? `</span>` : option_end;
+                    option_end   = stateA == 'miss' ? `</span>` : option_end;
 
                     romajiString += option_begin + romajiArray[j] + option_end;
 
                 }
                 //結果に応じてスタイル（クラス）を設定し、出力
                 option_begin = stateB == 'not-entered' ? `<span class="opacity05">` : option_begin;
-                option_end = stateB == 'not-entered' ? `</span>` : option_end;
+                option_end   = stateB == 'not-entered' ? `</span>` : option_end;
                 option_begin = stateB == 'miss' ? `<span class="colorRed">` : option_begin;
-                option_end = stateB == 'miss' ? `</span>` : option_end;
+                option_end   = stateB == 'miss' ? `</span>` : option_end;
 
                 textString += option_begin + questionContent[i].text + option_end;
 
             }
 
 
-            document.querySelector('.typingGame h2').innerHTML = textString;
-            document.querySelector('.typingGame p').innerHTML = romajiString;
+            document.querySelector('.TypingGame h2').innerHTML = textString;
+            document.querySelector('.TypingGame p').innerHTML = romajiString;
         };
 
-        //ゲーム開始時のみ、問題生成関数と問題描画関数を実行
+        //ゲーム開始時のみ、問題生成関数と問題l描画関数を実行
         if (!this.TypingGame_data.mustEnteredKeys.length) {
             generateMustEnteredKeys();
             renderingQuestion();
         }
 
         //キー入力インベントリスナーを追加（ユーザーの入力から問題の結果判定を行う）
-        let evenHandler = {
+        let eventHandler = {
             typeName: 'keydown',
             callback: event => {
                 if (event.key === 'Escape') return this.endTypingGame();    //Escapeキー押下時ゲームを終了させる
@@ -518,7 +524,7 @@ class App {
                 //一致したとき、問題の文字列の最後の文字の判定だった場合、かつ問題が最後だった場合はゲーム終了のグローバル関数を返し、その場合は
                 if (event.key == this.TypingGame_data.mustEnteredKeys[i].character) {
                     this.TypingGame_data.mustEnteredKeys[i].state = 'entered';
-                    if (i >= (this.TypingGame_data, mustEnteredKeys.length - 1)) {
+                    if (i >= (this.TypingGame_data.mustEnteredKeys.length - 1)) {
                         if (this.TypingGame_data.currentQuestionIndex >= (this.TypingGame_data.questionContents.length - 1)) {
                             this.TypingGame_data.currentQuestionIndex++;
                             return this.endTypingGame();
@@ -535,13 +541,13 @@ class App {
                     this.TypingGame_data.missCount++;   //誤タイプ数をカウント
                 }
 
-                this.TypingGame_data.typeingCount++;//総タイプをカウント
+                this.TypingGame_data.TypingCount++;//総タイプをカウント
 
                 renderingQuestion();
             }
         };
-        this.eventHandlers[1] = evenHandler;
-        document.addEventListener(evenHandler.typeName, evenHandler.callback);
+        this.eventHandlers[1] = eventHandler;
+        document.addEventListener(eventHandler.typeName, eventHandler.callback);
 
         //タイム更新と表示のインターバルを登録
         if (true) {
@@ -561,13 +567,13 @@ class App {
                 this.TypingGame_data.time[2]++;//sec point (00:00.XX)
                 if (this.TypingGame_data.time[2] >= 100) this.TypingGame_data.time[2] = 0;
 
-                document.querySelector('.typingGame .time').innerHTML = `${ this.twoDigit(this.TypingGame_data.time[0]) }:${ this.twoDigit(this.TypingGame_data.time[1]) }:${ this.twoDigit(this.TypingGame_data.time[2]) }`;
+                document.querySelector('.TypingGame .time').innerHTML = `${ this.twoDigit(this.TypingGame_data.time[0]) }:${ this.twoDigit(this.TypingGame_data.time[1]) }:${ this.twoDigit(this.TypingGame_data.time[2]) }`;
             },10));
         }
 
         //UIを更新
-        document.querySelector('.typingGame button').setAttribute('onclick', 'app.endTypingGame();');
-        document.querySelector('.typingGame button').innerHTML = '終わる(Escapeキーでも終了できます)';
+        document.querySelector('.TypingGame button').setAttribute('onclick', 'app.endTypingGame();');
+        document.querySelector('.TypingGame button').innerHTML = '終わる(Escapeキーでも終了できます)';
 
         return true;
     }
@@ -594,11 +600,11 @@ class App {
         }
 
         //UIを更新
-        document.querySelector('.typingGame h2').innerHTML = `クリア数: ${ this.TypingGame_data.currentQuestionIndex } /${this.TypingGame_data.questionContents.length}`;
-        document.querySelector('.typingGame p').innerHTML = `総タイプ: ${ this.TypingGame_data.typingCount } <br>誤タイプ数: ${this.TypingGame_data.missCount}<br>正タイプ数:${this.TypingGame_data.clearCount}`;
+        document.querySelector('.TypingGame h2').innerHTML = `クリア数: ${ this.TypingGame_data.currentQuestionIndex } /${this.TypingGame_data.questionContents.length}`;
+        document.querySelector('.TypingGame p').innerHTML = `総タイプ: ${this.TypingGame_data.TypingCount} <br>誤タイプ数: ${this.TypingGame_data.missCount}<br>正タイプ数:${this.TypingGame_data.clearCount}`;
 
-        document.querySelector('.typingGame button').setAttribute('onclick', `app.title();`);
-        document.querySelector('.typingGame button').innerHTML = `タイトルへ`;
+        document.querySelector('.TypingGame button').setAttribute('onclick', `app.title();`);
+        document.querySelector('.TypingGame button').innerHTML = `タイトルへ`;
 
         return true;
     }
