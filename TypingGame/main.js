@@ -430,16 +430,16 @@ class App {
         let generateMustEnteredKeys = () => {
             if (!this.TypingGame_data.questionContents) return false;
 
-            let questionCntent = this.TypingGame_data.questionContents[this.TypingGame_data.currentQuestionIndex].characters;
-            if (!questionCntent) return false;
+            let questionContent = this.TypingGame_data.questionContents[this.TypingGame_data.currentQuestionIndex].characters;
+            if (!questionContent) return false;
 
             this.TypingGame_data.mustEnteredKeys = [];
 
-            for (let i = 0; i < questionCntent.length; i++) {
-                let romajiArray = questionCntent[i].romaji.split('');    //文字列を一文字ずつ分割
+            for (let i = 0; i < questionContent.length; i++) {
+                let romajiArray = questionContent[i].romaji.split('');    //文字列を一文字ずつ分割
 
                 for (let j = 0; j < romajiArray.length; j++) {
-                    this.TypingGame_data.mustEnteredKeys.push({ charcter: romajiArray[j], state: 'not-entered' });//配列の末尾に要素を追加
+                    this.TypingGame_data.mustEnteredKeys.push({ character: romajiArray[j], state: 'not-entered' });//配列の末尾に要素を追加
                 }
             }
         }
